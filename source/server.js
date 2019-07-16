@@ -1,13 +1,47 @@
 // Core
 import express from 'express';
+import passport from 'passport';
+import { Strategy as GitHubStrategy } from 'passport-github2';
 
 // Instruments
-import { logger, errorLogger, NotFoundError, notFoundLogger, validationLogger } from './utils';
+import {
+    logger,
+    errorLogger,
+    NotFoundError,
+    notFoundLogger,
+    validationLogger,
+    getGithubSecrets,
+} from './utils';
 
 // Routers
 import { auth, users, classes, lessons } from './routers';
 
 const app = express();
+
+passport.serializeUser((user, done) => {
+    done(null, user);
+});
+
+passport.deserializeUser((obj, done) => {
+    done(null, obj);
+});
+
+const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = getGithubSecrets();
+
+passport.use(
+    new GitHubStrategy(
+        {
+            clientID:     GITHUB_CLIENT_ID,
+            clientSecret: GITHUB_CLIENT_SECRET,
+            callbackURL:  'http://127.0.0.1:3000/api/teachers',
+        },
+        (accessToken, refreshToken, profile, done) => {
+            process.nextTick(() => {
+                return done(null, profile);
+            });
+        },
+    ),
+);
 
 app.use(express.json({ limit: '10kb' }));
 

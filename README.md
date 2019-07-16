@@ -1,14 +1,6 @@
-# Backend Intensive
-
-#### Boilerplate repository for Lectrum Backend Intensive.
-
-#### Перед запуском проекта:
-1. Создать в корне проекта (на одном уровне с package.json) файл с именем `.env`
-2. Добавить в файл следующий код
-3. Имя базы данных выбираем следующее → первая буква имени и фамилия латиницей, в нижнем регистре
+**Внимание!** Для этого задания необходимо создать приложение на [GitHub](https://github.com/settings/developers)
 
 ```
-DEBUG='server:*,router:*'
-PORT=3000
-DB=your_db
+GITHUB_CLIENT_ID='code', 
+GITHUB_CLIENT_SECRET='code'
 ```
